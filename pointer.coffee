@@ -15,7 +15,10 @@ changeCallback = (args...) ->
     console.log args
 
 # Hook pointer lock state change events
-document.addEventListener('pointerlockchange', changeCallback, false)
-document.addEventListener('mozpointerlockchange', changeCallback, false)
-document.addEventListener('webkitpointerlockchange', changeCallback, false)
+for prefix in ["", "moz", "webkit"]
+    document.addEventListener(prefix + 'pointerlockchange', changeCallback, false)
 
+
+window.onload = ->
+    button = document.querySelector("#click")
+    button.addEventListener("click", -> requestPointerLock(button))
