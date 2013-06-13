@@ -18,3 +18,4 @@ changeCallback = (args...) ->
 document.addEventListener('pointerlockchange', changeCallback, false)
 document.addEventListener('mozpointerlockchange', changeCallback, false)
 document.addEventListener('webkitpointerlockchange', changeCallback, false)
+
