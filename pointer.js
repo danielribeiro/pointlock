@@ -21,8 +21,8 @@
         container.mozRequestFullScreen();
         if (document.mozFullScreenElement === container) {
           onScreenChange = container.requestPointerLock();
+          return document.addEventListener("mozfullscreenchange", onScreenChange, false);
         }
-        return document.addEventListener("mozfullscreenchange", onScreenChange, false);
       } else {
         return container.requestPointerLock();
       }
