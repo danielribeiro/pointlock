@@ -4,20 +4,27 @@
 
   PointerLock = {
     init: function() {
+      var self;
       this.enabled = false;
+      self = this;
       return ["", "moz", "webkit"].forEach(function(prefix) {
-        var changeCallback,
-          _this = this;
+        var changeCallback;
         changeCallback = function(e) {
           console.log("pointer lock changed for " + prefix);
           console.log(e.type);
-          return _this.enabled = !_this.enabled;
+          self.enabled = !self.enabled;
+          return document.querySelector("#status").textContent = self.enabled ? "locked!" : "not locked";
         };
         return document.addEventListener(prefix + 'pointerlockchange', changeCallback, false);
       });
     },
     fullScreenLock: function(container) {
       var onFirefox, onScreenChange;
+      console.log("enabling full lock....", this.enabled);
+      if (this.enabled) {
+        return;
+      }
+      console.log("not returned");
       container.fullScreenLock = container.fullScreenLock || container.mozRequestPointerLock || container.webkitRequestPointerLock;
       onFirefox = container.mozRequestFullScreen != null;
       if (onFirefox) {
@@ -39,7 +46,7 @@
     button = document.querySelector("#click");
     PointerLock.init();
     return button.addEventListener("click", function() {
-      return PointerLock.fullScreenLock(button);
+      return PointerLock.fullScreenLock(document.querySelector("body"));
     });
   };
 
