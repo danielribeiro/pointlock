@@ -3,22 +3,23 @@ PointerLock =
         @enabled = false
         # Hook pointer lock state change events
         ["", "moz", "webkit"].forEach (prefix) ->
-            changeCallback = (e) ->
+            changeCallback = (e) =>
                 console.log "pointer lock changed for #{prefix}"
                 console.log e.type
-
+                @enabled = !@enabled
             document.addEventListener(prefix + 'pointerlockchange', changeCallback, false)
 
-    requestPointerLock: (container) ->
+    fullScreenLock: (container) ->
         # Lock the pointer
-        container.requestPointerLock = container.requestPointerLock or container.mozRequestPointerLock or container.webkitRequestPointerLock
-        if container.mozRequestFullScreen
-            container.mozRequestFullScreen()
+        container.fullScreenLock = container.fullScreenLock or container.mozRequestPointerLock or container.webkitRequestPointerLock
+        onFirefox = container.mozRequestFullScreen?
+        if onFirefox
             onScreenChange = ->
-                container.requestPointerLock() if document.mozFullScreenElement is container
+                container.fullScreenLock() if document.mozFullScreenElement is container
             document.addEventListener "mozfullscreenchange", onScreenChange, false
+            container.mozRequestFullScreen()
         else
-            container.requestPointerLock()
+            container.fullScreenLock()
 
 
 
@@ -28,4 +29,4 @@ PointerLock =
 window.onload = ->
     button = document.querySelector("#click")
     PointerLock.init()
-    button.addEventListener("click", -> PointerLock.requestPointerLock(button))
+    button.addEventListener("click", -> PointerLock.fullScreenLock(button))

@@ -6,27 +6,30 @@
     init: function() {
       this.enabled = false;
       return ["", "moz", "webkit"].forEach(function(prefix) {
-        var changeCallback;
+        var changeCallback,
+          _this = this;
         changeCallback = function(e) {
           console.log("pointer lock changed for " + prefix);
-          return console.log(e.type);
+          console.log(e.type);
+          return _this.enabled = !_this.enabled;
         };
         return document.addEventListener(prefix + 'pointerlockchange', changeCallback, false);
       });
     },
-    requestPointerLock: function(container) {
-      var onScreenChange;
-      container.requestPointerLock = container.requestPointerLock || container.mozRequestPointerLock || container.webkitRequestPointerLock;
-      if (container.mozRequestFullScreen) {
-        container.mozRequestFullScreen();
+    fullScreenLock: function(container) {
+      var onFirefox, onScreenChange;
+      container.fullScreenLock = container.fullScreenLock || container.mozRequestPointerLock || container.webkitRequestPointerLock;
+      onFirefox = container.mozRequestFullScreen != null;
+      if (onFirefox) {
         onScreenChange = function() {
           if (document.mozFullScreenElement === container) {
-            return container.requestPointerLock();
+            return container.fullScreenLock();
           }
         };
-        return document.addEventListener("mozfullscreenchange", onScreenChange, false);
+        document.addEventListener("mozfullscreenchange", onScreenChange, false);
+        return container.mozRequestFullScreen();
       } else {
-        return container.requestPointerLock();
+        return container.fullScreenLock();
       }
     }
   };
@@ -36,7 +39,7 @@
     button = document.querySelector("#click");
     PointerLock.init();
     return button.addEventListener("click", function() {
-      return PointerLock.requestPointerLock(button);
+      return PointerLock.fullScreenLock(button);
     });
   };
 
