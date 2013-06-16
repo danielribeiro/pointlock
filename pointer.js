@@ -19,10 +19,12 @@
       container.requestPointerLock = container.requestPointerLock || container.mozRequestPointerLock || container.webkitRequestPointerLock;
       if (container.mozRequestFullScreen) {
         container.mozRequestFullScreen();
-        if (document.mozFullScreenElement === container) {
-          onScreenChange = container.requestPointerLock();
-          return document.addEventListener("mozfullscreenchange", onScreenChange, false);
-        }
+        onScreenChange = function() {
+          if (document.mozFullScreenElement === container) {
+            return container.requestPointerLock();
+          }
+        };
+        return document.addEventListener("mozfullscreenchange", onScreenChange, false);
       } else {
         return container.requestPointerLock();
       }

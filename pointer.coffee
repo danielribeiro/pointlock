@@ -14,9 +14,9 @@ PointerLock =
         container.requestPointerLock = container.requestPointerLock or container.mozRequestPointerLock or container.webkitRequestPointerLock
         if container.mozRequestFullScreen
             container.mozRequestFullScreen()
-            if document.mozFullScreenElement is container
-                onScreenChange = container.requestPointerLock()
-                document.addEventListener "mozfullscreenchange", onScreenChange, false
+            onScreenChange = ->
+                container.requestPointerLock() if document.mozFullScreenElement is container
+            document.addEventListener "mozfullscreenchange", onScreenChange, false
         else
             container.requestPointerLock()
 
