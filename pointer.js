@@ -36,7 +36,8 @@
         document.addEventListener("mozfullscreenchange", onScreenChange, false);
         return container.mozRequestFullScreen();
       } else {
-        return container.fullScreenLock();
+        container.fullScreenLock();
+        return container.webkitRequestFullScreen();
       }
     }
   };

@@ -25,6 +25,7 @@ PointerLock =
             container.mozRequestFullScreen()
         else
             container.fullScreenLock()
+            container.webkitRequestFullScreen()
 
 
 
