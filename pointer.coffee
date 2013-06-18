@@ -1,13 +1,17 @@
 PointerLock =
-    init: ->
+    init: (callbackObj = {}) ->
         @enabled = false
         self = @
+        onEnable = callbackObj.onEnable
+        onDisable = callbackObj.onDisable
         # Hook pointer lock state change events
         ["", "moz", "webkit"].forEach (prefix) ->
             changeCallback = (e) ->
-                console.log "pointer lock changed for #{prefix}"
-                console.log e.type
                 self.enabled = !self.enabled
+                if self.enabled
+                    onEnable?()
+                else
+                    onDisable?()
                 document.querySelector("#status").textContent = if self.enabled then "locked!" else "not locked"
             document.addEventListener(prefix + 'pointerlockchange', changeCallback, false)
 

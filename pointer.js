@@ -3,16 +3,28 @@
   var PointerLock;
 
   PointerLock = {
-    init: function() {
-      var self;
+    init: function(callbackObj) {
+      var onDisable, onEnable, self;
+      if (callbackObj == null) {
+        callbackObj = {};
+      }
       this.enabled = false;
       self = this;
+      onEnable = callbackObj.onEnable;
+      onDisable = callbackObj.onDisable;
       return ["", "moz", "webkit"].forEach(function(prefix) {
         var changeCallback;
         changeCallback = function(e) {
-          console.log("pointer lock changed for " + prefix);
-          console.log(e.type);
           self.enabled = !self.enabled;
+          if (self.enabled) {
+            if (typeof onEnable === "function") {
+              onEnable();
+            }
+          } else {
+            if (typeof onDisable === "function") {
+              onDisable();
+            }
+          }
           return document.querySelector("#status").textContent = self.enabled ? "locked!" : "not locked";
         };
         return document.addEventListener(prefix + 'pointerlockchange', changeCallback, false);
