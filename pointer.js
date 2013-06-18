@@ -3,6 +3,13 @@
   var PointerLock;
 
   PointerLock = {
+    lockAndFullscreen: function(el, callbackObj) {
+      if (callbackObj == null) {
+        callbackObj = {};
+      }
+      this.init(callbackObj);
+      return this.fullScreenLock(el);
+    },
     init: function(callbackObj) {
       var onDisable, onEnable, self;
       if (callbackObj == null) {
@@ -56,16 +63,15 @@
   window.onload = function() {
     var button;
     button = document.querySelector("#click");
-    PointerLock.init({
-      onEnable: function() {
-        return console.log("enabled!");
-      },
-      onDisable: function() {
-        return console.log("disabled!");
-      }
-    });
     return button.addEventListener("click", function() {
-      return PointerLock.fullScreenLock(document.querySelector("body"));
+      return PointerLock.lockAndFullscreen(document.querySelector("body"), {
+        onEnable: function() {
+          return console.log("enabled!");
+        },
+        onDisable: function() {
+          return console.log("disabled!");
+        }
+      });
     });
   };
 
