@@ -10,8 +10,7 @@
       }
       this.enabled = false;
       self = this;
-      onEnable = callbackObj.onEnable;
-      onDisable = callbackObj.onDisable;
+      onEnable = callbackObj.onEnable, onDisable = callbackObj.onDisable;
       return ["", "moz", "webkit"].forEach(function(prefix) {
         var changeCallback;
         changeCallback = function(e) {

@@ -2,8 +2,7 @@ PointerLock =
     init: (callbackObj = {}) ->
         @enabled = false
         self = @
-        onEnable = callbackObj.onEnable
-        onDisable = callbackObj.onDisable
+        {onEnable, onDisable} = callbackObj
         # Hook pointer lock state change events
         ["", "moz", "webkit"].forEach (prefix) ->
             changeCallback = (e) ->
