@@ -57,7 +57,14 @@
   window.onload = function() {
     var button;
     button = document.querySelector("#click");
-    PointerLock.init();
+    PointerLock.init({
+      onEnable: function() {
+        return console.log("enabled!");
+      },
+      onDisable: function() {
+        return console.log("disabled!");
+      }
+    });
     return button.addEventListener("click", function() {
       return PointerLock.fullScreenLock(document.querySelector("body"));
     });

@@ -38,5 +38,7 @@ PointerLock =
 
 window.onload = ->
     button = document.querySelector("#click")
-    PointerLock.init()
+    PointerLock.init
+        onEnable: -> console.log "enabled!"
+        onDisable: -> console.log "disabled!"
     button.addEventListener("click", -> PointerLock.fullScreenLock(document.querySelector("body")))
