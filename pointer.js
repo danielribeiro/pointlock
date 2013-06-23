@@ -3,13 +3,6 @@
   var PointerLock;
 
   PointerLock = {
-    lockAndFullscreen: function(el, callbackObj) {
-      if (callbackObj == null) {
-        callbackObj = {};
-      }
-      this.init(callbackObj);
-      return this.fullScreenLock(el);
-    },
     init: function(callbackObj) {
       var onDisable, onEnable, self;
       if (callbackObj == null) {
@@ -23,15 +16,10 @@
         changeCallback = function(e) {
           self.enabled = !self.enabled;
           if (self.enabled) {
-            if (typeof onEnable === "function") {
-              onEnable();
-            }
+            return typeof onEnable === "function" ? onEnable() : void 0;
           } else {
-            if (typeof onDisable === "function") {
-              onDisable();
-            }
+            return typeof onDisable === "function" ? onDisable() : void 0;
           }
-          return document.querySelector("#status").textContent = self.enabled ? "locked!" : "not locked";
         };
         return document.addEventListener(prefix + 'pointerlockchange', changeCallback, false);
       });
@@ -63,15 +51,18 @@
   window.onload = function() {
     var button;
     button = document.querySelector("#click");
+    PointerLock.init({
+      onEnable: function() {
+        console.log("enabled!");
+        return document.querySelector("#status").textContent = "locked!";
+      },
+      onDisable: function() {
+        console.log("disabled!");
+        return document.querySelector("#status").textContent = "not locked";
+      }
+    });
     return button.addEventListener("click", function() {
-      return PointerLock.lockAndFullscreen(document.querySelector("body"), {
-        onEnable: function() {
-          return console.log("enabled!");
-        },
-        onDisable: function() {
-          return console.log("disabled!");
-        }
-      });
+      return PointerLock.fullScreenLock(document.querySelector("body"));
     });
   };
 

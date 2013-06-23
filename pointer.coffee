@@ -1,8 +1,4 @@
 PointerLock =
-    lockAndFullscreen: (el, callbackObj = {}) ->
-        @init callbackObj
-        @fullScreenLock el
-
     init: (callbackObj = {}) ->
         @enabled = false
         self = @
@@ -15,7 +11,6 @@ PointerLock =
                     onEnable?()
                 else
                     onDisable?()
-                document.querySelector("#status").textContent = if self.enabled then "locked!" else "not locked"
             document.addEventListener(prefix + 'pointerlockchange', changeCallback, false)
 
     fullScreenLock: (container) ->
@@ -34,9 +29,18 @@ PointerLock =
             container.fullScreenLock()
             container.webkitRequestFullScreen()
 
+
+
+
+
+
 window.onload = ->
     button = document.querySelector("#click")
-    button.addEventListener "click", ->
-        PointerLock.lockAndFullscreen document.querySelector("body"),
-            onEnable: -> console.log "enabled!"
-            onDisable: -> console.log "disabled!"
+    PointerLock.init
+        onEnable: ->
+            console.log "enabled!"
+            document.querySelector("#status").textContent = "locked!"
+        onDisable: ->
+            console.log "disabled!"
+            document.querySelector("#status").textContent = "not locked"
+    button.addEventListener("click", -> PointerLock.fullScreenLock(document.querySelector("body")))
