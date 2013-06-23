@@ -26,11 +26,9 @@
     },
     fullScreenLock: function(container) {
       var onFirefox, onScreenChange;
-      console.log("enabling full lock....", this.enabled);
       if (this.enabled) {
         return;
       }
-      console.log("not returned");
       container.fullScreenLock = container.fullScreenLock || container.mozRequestPointerLock || container.webkitRequestPointerLock;
       onFirefox = container.mozRequestFullScreen != null;
       if (onFirefox) {

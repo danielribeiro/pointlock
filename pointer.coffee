@@ -14,9 +14,7 @@ PointerLock =
             document.addEventListener(prefix + 'pointerlockchange', changeCallback, false)
 
     fullScreenLock: (container) ->
-        console.log "enabling full lock...." , @enabled
         return if @enabled
-        console.log "not returned"
         # Lock the pointer
         container.fullScreenLock = container.fullScreenLock or container.mozRequestPointerLock or container.webkitRequestPointerLock
         onFirefox = container.mozRequestFullScreen?
