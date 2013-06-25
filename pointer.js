@@ -9,6 +9,7 @@
         callbackObj = {};
       }
       this.enabled = false;
+      this.container = null;
       self = this;
       onEnable = callbackObj.onEnable, onDisable = callbackObj.onDisable;
       return ["", "moz", "webkit"].forEach(function(prefix) {
@@ -32,17 +33,20 @@
       container.fullScreenLock = container.fullScreenLock || container.mozRequestPointerLock || container.webkitRequestPointerLock;
       onFirefox = container.mozRequestFullScreen != null;
       if (onFirefox) {
-        onScreenChange = function() {
-          if (document.mozFullScreenElement === container) {
-            return container.fullScreenLock();
-          }
-        };
-        document.addEventListener("mozfullscreenchange", onScreenChange, false);
-        return container.mozRequestFullScreen();
+        if (this.container !== container) {
+          onScreenChange = function() {
+            if (document.mozFullScreenElement === container) {
+              return container.fullScreenLock();
+            }
+          };
+          document.addEventListener("mozfullscreenchange", onScreenChange, false);
+        }
+        container.mozRequestFullScreen();
       } else {
         container.fullScreenLock();
-        return container.webkitRequestFullScreen();
+        container.webkitRequestFullScreen();
       }
+      return this.container = container;
     }
   };
 

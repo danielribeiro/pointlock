@@ -1,6 +1,7 @@
 PointerLock =
     init: (callbackObj = {}) ->
         @enabled = false
+        @container = null
         self = @
         {onEnable, onDisable} = callbackObj
         # Hook pointer lock state change events
@@ -19,13 +20,14 @@ PointerLock =
         container.fullScreenLock = container.fullScreenLock or container.mozRequestPointerLock or container.webkitRequestPointerLock
         onFirefox = container.mozRequestFullScreen?
         if onFirefox
-            onScreenChange = ->
-                container.fullScreenLock() if document.mozFullScreenElement is container
-            document.addEventListener "mozfullscreenchange", onScreenChange, false
+            unless @container == container
+                onScreenChange = -> container.fullScreenLock() if document.mozFullScreenElement is container
+                document.addEventListener "mozfullscreenchange", onScreenChange, false
             container.mozRequestFullScreen()
         else
             container.fullScreenLock()
             container.webkitRequestFullScreen()
+        @container = container
 
 
 
