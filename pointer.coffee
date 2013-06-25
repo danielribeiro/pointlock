@@ -29,16 +29,15 @@ PointerLock =
 
 
 
-
-
-
 window.onload = ->
+    showStatus = (str) ->
+        document.querySelector("#status").textContent = str
     button = document.querySelector("#click")
     PointerLock.init
         onEnable: ->
             console.log "enabled!"
-            document.querySelector("#status").textContent = "locked!"
+            showStatus "locked!"
         onDisable: ->
             console.log "disabled!"
-            document.querySelector("#status").textContent = "not locked"
+            showStatus "not locked"
     button.addEventListener("click", -> PointerLock.fullScreenLock(document.querySelector("body")))

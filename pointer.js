@@ -47,16 +47,19 @@
   };
 
   window.onload = function() {
-    var button;
+    var button, showStatus;
+    showStatus = function(str) {
+      return document.querySelector("#status").textContent = str;
+    };
     button = document.querySelector("#click");
     PointerLock.init({
       onEnable: function() {
         console.log("enabled!");
-        return document.querySelector("#status").textContent = "locked!";
+        return showStatus("locked!");
       },
       onDisable: function() {
         console.log("disabled!");
-        return document.querySelector("#status").textContent = "not locked";
+        return showStatus("not locked");
       }
     });
     return button.addEventListener("click", function() {
