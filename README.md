@@ -1,7 +1,15 @@
-pointlock
+Pointlock
 =========
 
-wip
+Simple way of doing cross browser pointer lock. It also makes it fullscreen, as on older versions of Firefox, it is required to be fullscreen in order to get the pointer lock.
+
+Based on the following:
+
+http://advent2012.digitpaint.nl/23/
+
+https://github.com/toji/game-shim/blob/master/game-shim.js
+
+
 
 
 
