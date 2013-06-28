@@ -1,4 +1,4 @@
-PointerLock =
+@PointerLock =
     init: (callbackObj = {}) ->
         @enabled = false
         @container = null
