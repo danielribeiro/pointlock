@@ -30,6 +30,5 @@
         @container = container
 
     lock: (container, callbackObj) ->
-        @init(container)
-        @fullScreenLock(callbackObj)
-
+        @init(callbackObj)
+        @fullScreenLock(container)

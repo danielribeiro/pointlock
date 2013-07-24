@@ -47,8 +47,8 @@
       return this.container = container;
     },
     lock: function(container, callbackObj) {
-      this.init(container);
-      return this.fullScreenLock(callbackObj);
+      this.init(callbackObj);
+      return this.fullScreenLock(container);
     }
   };
 
