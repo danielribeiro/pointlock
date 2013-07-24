@@ -29,3 +29,7 @@
             container.webkitRequestFullScreen()
         @container = container
 
+    lock: (container, callbackObj) ->
+        @init(container)
+        @fullScreenLock(callbackObj)
+
