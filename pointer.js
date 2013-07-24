@@ -45,6 +45,10 @@
         container.webkitRequestFullScreen();
       }
       return this.container = container;
+    },
+    lock: function(container, callbackObj) {
+      this.init(container);
+      return this.fullScreenLock(callbackObj);
     }
   };
 
