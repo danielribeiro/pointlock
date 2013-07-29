@@ -26,7 +26,7 @@
             container.mozRequestFullScreen()
         else
             container.fullScreenLock()
-            container.webkitRequestFullScreen()
+            container.webkitRequestFullscreen()
         @container = container
 
     lock: (container, callbackObj) ->
