@@ -9,8 +9,22 @@ http://advent2012.digitpaint.nl/23/
 
 https://github.com/toji/game-shim/blob/master/game-shim.js
 
+Example of usage (on [gh-page](https://github.com/danielribeiro/pointlock/tree/gh-pages))
 
-
+```coffeescript
+window.onload = ->
+    showStatus = (str) ->
+        document.querySelector("#status").textContent = str
+    button = document.querySelector("#click")
+    PointerLock.init
+        onEnable: ->
+            console.log "enabled!"
+            showStatus "locked!"
+        onDisable: ->
+            console.log "disabled!"
+            showStatus "not locked"
+    button.addEventListener("click", -> PointerLock.fullScreenLock(document.querySelector("body")))
+```
 
 
 Meta
