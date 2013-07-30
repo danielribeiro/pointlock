@@ -1,5 +1,9 @@
 @PointerLock =
+    _initialized: false
+
     init: (callbackObj = {}) ->
+        return if @_initialized
+        @_initialized = true
         @enabled = false
         @container = null
         self = @
@@ -26,7 +30,7 @@
             container.mozRequestFullScreen()
         else
             container.fullScreenLock()
-            container.webkitRequestFullScreen()
+            container.webkitRequestFullscreen()
         @container = container
 
     lock: (container, callbackObj) ->
