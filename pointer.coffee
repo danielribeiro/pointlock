@@ -1,5 +1,9 @@
 @PointerLock =
+    _initialized: false
+
     init: (callbackObj = {}) ->
+        return if @_initialized
+        @_initialized = true
         @enabled = false
         @container = null
         self = @
